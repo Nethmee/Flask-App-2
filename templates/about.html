@@ -1,0 +1,48 @@
+{% extends 'Layout.html'%}
+{% block head %}
+{{super()}}
+ <!-- Custom styles for this template -->
+ <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+ <!-- Custom styles for this template -->
+ <link href="blog.css" rel="stylesheet">
+ <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/blog/">
+ <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/blog/">
+
+
+<style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+</style>
+{% endblock %}
+
+{% block body%}
+{{super()}}
+<div class="blog-post" style="margin: 3%;">
+    <h2 class="blog-post-title">Who are we</h2>
+    <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+
+    <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
+    <hr>
+    <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
+    <blockquote>
+      <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+    </blockquote>
+    <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+    
+   
+  </div><!-- /.blog-post -->
+
+
+{% endblock %}
