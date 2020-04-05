@@ -6,8 +6,18 @@ from passlib.hash import sha256_crypt
 
 #making an instance of a flask class,which means initializing the flask app
 app = Flask(__name__)
-Articles = Articles()
 
+
+####### mysql configurations ########
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'myflaskapp'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor' # to convert the tuples which is returned by default ,to a dictionary
+
+####initializing mysql #######
+mysql = MySQL(app)
+Articles = Articles()
 #########  routes  ###########
 ##### routes should be declared before app.run() ####
 
@@ -32,9 +42,12 @@ def show_user_profile(username):
     # show the user profile for that user
     print(username)
     return username  
+
+
 class RegistrationForm(Form):
-    username  = StringField('Username', [validators.Length(min=4, max=25)])
-    email = StringField('email', [validators.Length(min=6, max=35)])
+    name  = StringField('name', [validators.Length(min=4, max=25),validators.DataRequired()])
+    username  = StringField('Username', [validators.Length(min=4, max=25),validators.DataRequired()])
+    email = StringField('email', [validators.Length(min=6, max=35),validators.DataRequired()])
     password = PasswordField('Password', [
             validators.Length(min=6, max=15),
             validators.DataRequired(),
@@ -46,8 +59,26 @@ class RegistrationForm(Form):
 def register():
         form = RegistrationForm (request.form)
         if request.method == 'POST' and form.validate():
+                name = form.name.data
+                username = form.username.data
+                email = form.email.data
+                password = sha256_crypt.encrypt(str(form.password.data))
+                
+                #creating the cursor
+                cur = mysql.connection.cursor()
+                print("works")
+                cur.execute("INSERT INTO users(name,email,username,password) VALUES (%s, %s,%s,%s )" ,(name, email,username ,password))
+                ## comiiting the database
+                mysql.connection.commit()
+                #close the connection
+                cur.close()
+                flash('You are now registered successfully', 'sucess')# with flash messaging we can use 
+                
+                redirect(url_for('index'))
+                
+                
                 return render_template('register.html')#passing the form instance created above
-        return render_template('register.html',form=form)
+        return render_template('register.html',form = form)
                 
 
 if(__name__) =='__main__':
