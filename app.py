@@ -93,12 +93,12 @@ def login() :
                result = cur.execute("SELECT * FROM users WHERE users.email=%s" ,[email])
                if result > 0:
                       row =cur.fetchone()# This method retrieves the next row of a query result set and returns a single sequence,
-                      while row is not None:
-                        print(row['password'])
-                        row = cur.fetchone()
+                #       while row is not None:
+                #         print(row['password'])
+                #         row = cur.fetchone()
                         
                       password =row['password']
-                      if sha256_crypt.verify('$5$rounds=535000$WEJFhUu6r//Y6yDj$ecuwvymHyai8U/mE.S6gOM5t3pm6h1ykQkcXo.pCoLC',password):
+                      if sha256_crypt.verify(password_candidate,password):
                                app.logger.info("passwords match")
                       else:
                                app.logger.info("passwords do not match") 
