@@ -104,8 +104,9 @@ def login() :
                                app.logger.info("passwords do not match") 
                                 
                else:
-                       app.logger.info("No user found with the email :%s",email)
-               print("result "+str(result))
+                       error ="No user found with this email "
+                       #app.logger.info("No user found with the email :%s",email)
+                       return render_template('LogIn.html', error)
                
                
                app.logger.info("hii")
