@@ -80,6 +80,36 @@ def register():
                 return render_template('register.html')#passing the form instance created above
         return render_template('register.html',form = form)
                 
+@app.route('/Login',methods=['GET','POST'])
+def login() :
+        if request.method == "POST":
+               req = request.form 
+               email=req["Email"]
+               password_candidate=req["password"]
+               print(req["Email"])
+               print("password candidate :%s ",password_candidate)
+                 #creating the cursor
+               cur = mysql.connection.cursor()
+               result = cur.execute("SELECT * FROM users WHERE users.email=%s" ,[email])
+               if result > 0:
+                      row =cur.fetchone()# This method retrieves the next row of a query result set and returns a single sequence,
+                      while row is not None:
+                        print(row['password'])
+                        row = cur.fetchone()
+                        
+                      password =row['password']
+                      if sha256_crypt.verify('$5$rounds=535000$WEJFhUu6r//Y6yDj$ecuwvymHyai8U/mE.S6gOM5t3pm6h1ykQkcXo.pCoLC',password):
+                               app.logger.info("passwords match")
+                      else:
+                               app.logger.info("passwords do not match") 
+                                
+               else:
+                       app.logger.info("No user found with the email :%s",email)
+               print("result "+str(result))
+               
+               
+               app.logger.info("hii")
+        return render_template('LogIn.html')
 
 if(__name__) =='__main__':
     app.run(debug=True)
