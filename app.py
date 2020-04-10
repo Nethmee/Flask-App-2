@@ -99,14 +99,17 @@ def login() :
                         
                       password =row['password']
                       if sha256_crypt.verify(password_candidate,password):
+                               msg="Passwords matched"
                                app.logger.info("passwords match")
-                      else:
+                               return render_template('LogIn.html',msg=msg)
+                      else:    
+                               error ="passwords do not match"
                                app.logger.info("passwords do not match") 
-                                
+                               return render_template('LogIn.html',error=error)
                else:
                        error ="No user found with this email "
                        #app.logger.info("No user found with the email :%s",email)
-                       return render_template('LogIn.html', error)
+                       return render_template('LogIn.html',error=error)
                
                
                app.logger.info("hii")
