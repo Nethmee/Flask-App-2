@@ -7,7 +7,7 @@
 <h1>Articles</h1>
 <div style="align-items: center;">
 <ul class="list-group">
-    {% for article in articles %} <!--this is the syntax for for loop and articles in the paramter name that is mentioned in the app.py-->
+{% for article in articles %} <!--this is the syntax for for loop and articles in the paramter name that is mentioned in the app.py-->
 
 <!--id of a particular article is passes as navigatio parameters-->
 <li class="list-group-item"><a href="articles/{{article.id}}">{{article.title}}</a></li>

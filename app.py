@@ -4,9 +4,15 @@ from flask_mysqldb import MySQL
 from wtforms import StringField, TextAreaField ,PasswordField ,validators,Form
 from passlib.hash import sha256_crypt
 
+
+
 #making an instance of a flask class,which means initializing the flask app
 app = Flask(__name__)
+app.secret_key ='secret123'
 
+
+
+    
 
 ####### mysql configurations ########
 app.config['MYSQL_HOST'] = 'localhost'
@@ -35,15 +41,17 @@ def singleAtricle(id)  :
 
 @app.route('/articles')
 def ariticles() :
-        return render_template('articles.html',articles = Articles)
+        return render_template('articles.htm l',articles = Articles)
 
 @app.route('/user/<username>')
 def show_user_profile(username):
     # show the user profile for that user
     print(username)
     return username  
-
-
+@app.route('/logout')
+def logout():
+        session.clear()
+        flash('You are logged out')
 class RegistrationForm(Form):
     name  = StringField('name', [validators.Length(min=4, max=25),validators.DataRequired()])
     username  = StringField('Username', [validators.Length(min=4, max=25),validators.DataRequired()])
@@ -85,6 +93,9 @@ def login() :
         if request.method == "POST":
                req = request.form 
                email=req["Email"]
+               session["logged_in"] = True
+               session['email'] = email
+               print(session.get('email'))
                password_candidate=req["password"]
                print(req["Email"])
                print("password candidate :%s ",password_candidate)
@@ -101,11 +112,21 @@ def login() :
                       if sha256_crypt.verify(password_candidate,password):
                                msg="Passwords matched"
                                app.logger.info("passwords match")
-                               return render_template('LogIn.html',msg=msg)
+                               session['logged_in'] = True
+                               session['email'] = email
+                               getUsername = cur.execute("SELECT username FROM users WHERE users.email=%s" ,[email])
+                               if getUsername > 0:
+                                        Username =cur.fetchone()
+                                        #session['username'] = Username
+                              
+                               print(session['email'])
+                               flash("You are now logged in")
+                               return redirect(url_for('dashboard'))
                       else:    
                                error ="passwords do not match"
                                app.logger.info("passwords do not match") 
                                return render_template('LogIn.html',error=error)
+                      cur.close()  
                else:
                        error ="No user found with this email "
                        #app.logger.info("No user found with the email :%s",email)
@@ -115,9 +136,14 @@ def login() :
                app.logger.info("hii")
         return render_template('LogIn.html')
 
+@app.route('/dashboard')
+def dashboard():
+        
+        return render_template('dashboard.html')
+
 if(__name__) =='__main__':
     app.run(debug=True)
-    
+   
     
     
     

@@ -10,6 +10,8 @@ flask = "*"
 flask-mysqldb = "*"
 flask-wtf = "*"
 passlib = "*"
+flask-session = "*"
+redis = "*"
 
 [requires]
 python_version = "3.6"
