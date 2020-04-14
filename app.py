@@ -8,7 +8,7 @@ from passlib.hash import sha256_crypt
 
 #making an instance of a flask class,which means initializing the flask app
 app = Flask(__name__)
-app.secret_key ='secret123'
+app.secret_key ='secret123' #this secret key will be used to encode the session content
 
 
 
@@ -120,9 +120,10 @@ def login() :
                                getUsername = cur.execute("SELECT username FROM users WHERE users.email=%s" ,[email])
                                if getUsername > 0:
                                         Username =cur.fetchone()
-                                        #session['username'] = Username
+                                        session['username'] = Username
                               
                                print(session['email'])
+                               print(session)
                                flash("You are now logged in")
                                return redirect(url_for('dashboard'))
                       else:    
