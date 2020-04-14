@@ -3,7 +3,7 @@ from data import Articles
 from flask_mysqldb import MySQL
 from wtforms import StringField, TextAreaField ,PasswordField ,validators,Form
 from passlib.hash import sha256_crypt
-
+from functools import wraps
 
 
 #making an instance of a flask class,which means initializing the flask app
@@ -139,10 +139,22 @@ def login() :
                
                app.logger.info("hii")
         return render_template('LogIn.html')
-
-@app.route('/dashboard')
-def dashboard():
+#check if the user is already logged in
+def is_logged_in(f):
+        @wraps(f)
+        def wrap(*args,**kwargs):
+                if 'logged_in' in session:
+                        return f(*args, **kwargs)
+                else:
+                        flash("Unauthorised ,PLease login")
+                        return redirect(url_for('login'))
+                
+        return wrap
         
+             
+@app.route('/dashboard')
+@is_logged_in
+def dashboard():
         return render_template('dashboard.html')
 
 if(__name__) =='__main__':
