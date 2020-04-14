@@ -41,7 +41,7 @@ def singleAtricle(id)  :
 
 @app.route('/articles')
 def ariticles() :
-        return render_template('articles.htm l',articles = Articles)
+        return render_template('articles.html',articles = Articles)
 
 @app.route('/user/<username>')
 def show_user_profile(username):
@@ -52,6 +52,8 @@ def show_user_profile(username):
 def logout():
         session.clear()
         flash('You are logged out')
+        return redirect(url_for('login'))
+        
 class RegistrationForm(Form):
     name  = StringField('name', [validators.Length(min=4, max=25),validators.DataRequired()])
     username  = StringField('Username', [validators.Length(min=4, max=25),validators.DataRequired()])
@@ -66,6 +68,7 @@ class RegistrationForm(Form):
 @app.route('/register', methods =['GET', 'POST'])
 def register():
         form = RegistrationForm (request.form)
+        print (form)
         if request.method == 'POST' and form.validate():
                 name = form.name.data
                 username = form.username.data
@@ -85,7 +88,7 @@ def register():
                 redirect(url_for('index'))
                 
                 
-                return render_template('register.html')#passing the form instance created above
+                return render_template('register.html',form = form)#passing the form instance created above
         return render_template('register.html',form = form)
                 
 @app.route('/Login',methods=['GET','POST'])
