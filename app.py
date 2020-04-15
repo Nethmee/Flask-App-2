@@ -49,6 +49,7 @@ def show_user_profile(username):
     print(username)
     return username  
 @app.route('/logout')
+#@is_logged_in  
 def logout():
         session.clear()
         flash('You are logged out')
@@ -90,7 +91,7 @@ def register():
                 
                 return render_template('register.html',form = form)#passing the form instance created above
         return render_template('register.html',form = form)
-                
+             
 @app.route('/Login',methods=['GET','POST'])
 def login() :
         if request.method == "POST":
@@ -150,10 +151,37 @@ def is_logged_in(f):
                         return redirect(url_for('login'))
                 
         return wrap
-        
-             
+
+
+class ArticleAddForm(Form):
+    title  = StringField('title', [validators.Length(min=5, max=200),validators.DataRequired()])
+    author  = StringField('author', [validators.Length(min=4, max=25),validators.DataRequired()])
+    body = TextAreaField('body', [validators.Length(min=60),validators.DataRequired()])
+    
+    
+    
+@app.route('/add_article',methods=['POST','GET'])
+@is_logged_in  
+def addArticle():
+        form =ArticleAddForm(request.form)
+        if request.method=='POST' and form.validate():
+               title=request.form['title']
+               author=request.form['author']
+               body=request.form['body']
+               #creating the cursor
+               cur = mysql.connection.cursor()
+               cur.execute("INSERT INTO articles(title,author,body) VALUES (%s, %s,%s )" ,(title,author,body))
+                ## comiiting the database
+               mysql.connection.commit()
+               cur.close()
+               flash('successfully posted', 'sucess')# with flash messaging we can use 
+               return redirect(url_for('dashboard'))
+               
+               
+        return render_template('ArticleEditor.html',form=form)
+                     
 @app.route('/dashboard')
-@is_logged_in
+#@is_logged_in
 def dashboard():
         return render_template('dashboard.html')
 
