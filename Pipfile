@@ -12,6 +12,7 @@ flask-wtf = "*"
 passlib = "*"
 flask-session = "*"
 redis = "*"
+flask-ckeditor = "*"
 
 [requires]
 python_version = "3.6"
