@@ -187,24 +187,33 @@ def addArticle():
 @is_logged_in  
 def edit_single_article(id):
         print(id)
+        if request.method =="GET":
+                cur = mysql.connection.cursor()
+                result = cur.execute("SELECT * FROM articles WHERE articles.id=%s" ,[id])
+                if result > 0:
+                        article = cur.fetchone()    
+                        print("###################") 
+                        print(article) 
+                        print(" ") 
+                        return render_template('EditSingleArticle.html',article=article, id=id)
+                
         
-        cur = mysql.connection.cursor()
-        result = cur.execute("SELECT * FROM articles WHERE articles.id=%s" ,[id])
-        if result > 0:
-                article = cur.fetchone()    
-                print("###################") 
-                print(article) 
-                print(" ") 
-                return render_template('EditSingleArticle.html',article=article, id=id)
-        
-        
+        # if request.method =="POST":
+        #         req = request.form 
+        #         print("update values")
+                
+        #         print(req)
+        #         print(" ")
+                #title=req["title"]
+                #cur = mysql.connection.cursor()
+                #result = cur.execute('UPDATE articles SET title=%s,author=%s,body=%s WHERE id=%s',(title,author,body))                
        
         return render_template('EditSingleArticle.html',id=id)
 
 
                      
 @app.route('/dashboard')
-#@is_logged_in
+@is_logged_in
 def dashboard():
         cur = mysql.connection.cursor()
         #get articles
@@ -216,6 +225,30 @@ def dashboard():
         else:
                 msg ="No articles found"
                 return render_template('dashboard.html', msg=msg)
+        
+@app.route('/updateArticle/<string:id>',methods=['POST'])
+@is_logged_in
+def update_article(id):
+       print(id)
+       if request.method =="POST":
+                req = request.form
+                print("update values")
+                print(req)
+                title=req["title"]
+                author=req["author"]
+                body=req["body"]
+                cur = mysql.connection.cursor()
+                result = cur.execute('UPDATE articles SET title=%s,author=%s,body=%s WHERE id=%s',(title,author,body,id))   
+                if result > 0:
+                       print(str(result))
+                       return "sucess !!"
+       
+       
+       return "hii"
+          
+        
+        
+        
         
 
 if(__name__) =='__main__':
