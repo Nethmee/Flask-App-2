@@ -79,6 +79,24 @@ def single_Featured_Atricle(id)  :
                
        return render_template('Article.html',id=id,featured_Article=article)
 
+@app.route('/delete_article/<string:id>/')
+def Delete_Atricle(id)  :
+       cur = mysql.connection.cursor()
+       delete_article = cur.execute("DELETE FROM articles WHERE id=%s",[id])
+     
+       if delete_article > 0:
+               print("single article deleted")
+               mysql.connection.commit()
+          
+       else:
+              print("no such article found to delete") 
+         
+       
+                
+        #close the connection
+       cur.close()      
+       return "sucessfully deleted !!"
+
 
 @app.route('/user/<username>')
 def show_user_profile(username):
