@@ -19,8 +19,14 @@
         <ul class="navbar-nav mr-auto">
         {% if session.logged_in %}
         <li class="nav-item">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+         
+          </li>
+        <li class="nav-item">
+        
         <a class="nav-link" href="/logout">Log out</a>
         </li>
+        
         <li class="nav-item">
           <a class="nav-link" href="#">{{session.username.username}}</a>
           </li>

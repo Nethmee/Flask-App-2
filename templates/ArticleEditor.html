@@ -1,5 +1,14 @@
 {% extends 'Layout.html' %}
-
+{%block head%}
+{{super()}}
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/js/froala_editor.pkgd.min.js"></script>
+    
+   
+<script>
+   var editor = new FroalaEditor('#example') 
+</script>
+{% endblock%}
 {%block body%}
  
 {{super()}}
@@ -20,7 +29,7 @@
  {{render_field(form.author ,class="form-control")}} 
 </div>
 
-<div class="form-group">
+<div id="example">
     {{render_field(form.body ,class="form-control",id="editor")}} 
 </div>
 <p><input type="submit" value="post" class="btn btn-primary"  /></p>

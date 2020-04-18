@@ -16,5 +16,33 @@ console.log(se)
 </script>
  <h3>Welcome to Dashboard {{session.username.username}}</h3>
 <a class ="btn btn-success" href="/add_article">Add Articles</a>
+<hr>
+<table class="table table-striped">
+<tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Date</th>
+    <th>   </th>
+    
+    <th>   </th>
 
+</tr>
+{%for article in articles%}
+<script>
+    console.log(article)
+</script>
+<tr>
+    <th>{{article.id}}</th>
+    <th>{{article.title}}</th>
+    <th>{{article.author}}</th>
+    <th>{{article.create_date}}</th>
+    <th><a href="edit_article/{{article.id}}" class="btn btn-info pull-right" >Edit</a></th>
+    <th><a href="#" class="btn btn-danger pull-left">Delete</a></th>
+    <th></th>
+
+</tr>
+
+{%endfor%}
+</table>
 {% endblock %}

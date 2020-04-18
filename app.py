@@ -183,7 +183,17 @@ def addArticle():
 @app.route('/dashboard')
 #@is_logged_in
 def dashboard():
-        return render_template('dashboard.html')
+        cur = mysql.connection.cursor()
+        #get articles
+        result = cur.execute("SELECT * FROM articles")
+        articles = cur.fetchall()
+        if result> 0:
+                print(articles)
+                return render_template('dashboard.html',articles=articles)
+        else:
+                msg ="No articles found"
+                return render_template('dashboard.html', msg=msg)
+        
 
 if(__name__) =='__main__':
     app.run(debug=True)

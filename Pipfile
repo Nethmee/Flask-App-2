@@ -13,6 +13,7 @@ passlib = "*"
 flask-session = "*"
 redis = "*"
 flask-ckeditor = "*"
+froala-editor = "*"
 
 [requires]
 python_version = "3.6"
