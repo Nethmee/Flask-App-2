@@ -1,5 +1,26 @@
 {% extends 'Layout.html' %}
 {% block body %} 
 {{super()}}
-<h3>{{id}}</h3>
+<div class="container">
+<br>
+<br>
+</div>
+<h1>{{featured_Article.title}}</h1>
+<div class="container">
+    <br>
+    <br>
+</div>
+<hr>
+<p><I>Written by  {{featured_Article.author}}</I></p>
+<div>
+<p>
+    {{featured_Article.body}}
+
+
+</p>
+
+
+
+</div>
+
 {% endblock %}

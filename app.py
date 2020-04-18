@@ -43,6 +43,43 @@ def singleAtricle(id)  :
 def ariticles() :
         return render_template('articles.html',articles = Articles)
 
+@app.route('/FeaturedArticles')
+def featured_ariticles() :
+        
+        cur = mysql.connection.cursor()
+        featured_Articles = cur.execute("SELECT * FROM featuredarticles")
+        print("result")
+        
+        print(str(featured_Articles))
+        if featured_Articles >0:
+                 articles = cur.fetchall()
+                 print("featured articles successfully retrieved")
+                 
+        else:
+                print("no Featured Articles found")
+                
+       
+        #print(articles)
+        mysql.connection.commit()
+        cur.close()
+        
+        return render_template('articles.html',articles = articles)
+
+@app.route('/Display_Farticles/<string:id>/')
+def single_Featured_Atricle(id)  :
+       cur = mysql.connection.cursor()
+       featured_Articles = cur.execute("SELECT * FROM featuredarticles WHERE id=%s",[id])
+       print(featured_Articles)
+       if featured_Articles > 0:
+               print("single featured article found")
+               article = cur.fetchone()
+               print(article)
+       else:
+              print("no such article found") 
+               
+       return render_template('Article.html',id=id,featured_Article=article)
+
+
 @app.route('/user/<username>')
 def show_user_profile(username):
     # show the user profile for that user
@@ -257,3 +294,4 @@ if(__name__) =='__main__':
     
     
     
+#INSERT INTO articles(title,author,body) VALUES ("", ""," " )
