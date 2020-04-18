@@ -179,6 +179,29 @@ def addArticle():
                
                
         return render_template('ArticleEditor.html',form=form)
+
+
+
+
+@app.route('/edit_article/<string:id>',methods=['POST','GET'])
+@is_logged_in  
+def edit_single_article(id):
+        print(id)
+        
+        cur = mysql.connection.cursor()
+        result = cur.execute("SELECT * FROM articles WHERE articles.id=%s" ,[id])
+        if result > 0:
+                article = cur.fetchone()    
+                print("###################") 
+                print(article) 
+                print(" ") 
+                return render_template('EditSingleArticle.html',article=article, id=id)
+        
+        
+       
+        return render_template('EditSingleArticle.html',id=id)
+
+
                      
 @app.route('/dashboard')
 #@is_logged_in

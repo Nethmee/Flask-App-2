@@ -1,0 +1,23 @@
+{% extends 'Layout.html' %}
+
+
+
+{%block body%}
+{{super()}}
+
+<br>
+<br>
+
+<form class="form-group" method="POST" action="" enctype="multipart/form-data">
+
+    <Input type ="text" name="title" value={{article.title}} class="form-control form-control-lg"  /><br/>
+    <Input type ="text" name="author" value={{article.author}} class="form-control form-control-lg"  /><br/>
+
+    <textarea  class="form-control form-control-lg" name="body" rows="8">{{article.body}}</textarea><br/>
+    <Input type ="submit" value="Back to dashboard" class="btn btn-secondary"/>
+    <a></a>
+    <Input type ="submit" value="Update Article" class="btn btn-dark"/>
+
+</form>
+ 
+{% endblock %}
