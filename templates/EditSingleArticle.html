@@ -7,21 +7,69 @@
 
 <br>
 <br>
+<script>
+function changeValue(id){
+  console.log(id);
+
+  if(id=="title"){
+    newTitle=document.getElementById("title").value;
+    console.log(newTitle);
+    document.getElementById("title").value=newTitle;
+  }
+  if(id=="author"){
+    newAuthor=document.getElementById("author").value;
+    console.log(newAuthor);
+    document.getElementById("author").value=newAuthor;
+   
+  }
+  if(id=="body"){
+    newBody=document.getElementById("body").value;
+    console.log(newBody);
+    document.getElementById("body").value=newBody;
+   
+  }
+/*switch(id){
+case title:
+    
+      newTitle=document.getElementById("title").value;
+      console.log(newTitle);
+    
+      break;
+case author:
+    
+      newAuthor=document.getElementById("author").value;
+      console.log(newAuthor);
+    
+      break;
+case body:
+    
+      newBody=document.getElementById("body").value;
+      console.log(newBody);
+    
+      break;
+    
+
+  }*/
+
+  
+}
+
+</script>
 
 <form class="form-group" method="POST" action="/updateArticle/{{article.id}}" enctype="multipart/form-data">
     <div class="form-group">
       <label for="Title">Title:</label>
-      <Input type ="text" name="title" value={{article.title}} class="form-control form-control-sm"  />
+      <Input type ="text" name="title" id="title" value={{article.title}} class="form-control form-control-sm" onchange="changeValue(id)" />
       <!-- <small id="helpId" class="text-muted">Help text</small> -->
     </div>
     <div class="form-group">
         <label for="Auther">Author:</label>
-        <Input type ="text" name="author" value={{article.author}} class="form-control form-control-sm"  />
+        <Input type ="text" name="author" id="author" value={{article.author}} class="form-control form-control-sm" onchange="changeValue(id)" />
         <!-- <small id="helpId" class="text-muted">Help text</small> -->
       </div>
       <div class="form-group">
-        <label for="Auther">Author:</label>
-        <textarea  class="form-control " name="body" rows="10">{{article.body}}</textarea>
+        <label for="Auther">Content:</label>
+        <textarea  class="form-control " name="body" id="body" rows="10" onchange="changeValue(id)">{{article.body}}</textarea>
         <!-- <small id="helpId" class="text-muted">Help text</small> -->
       </div>
   

@@ -14,8 +14,10 @@
     se =session.get('username')
 console.log(se)
 </script>
- <h3>Welcome to Dashboard {{session.username.username}}</h3>
-<a class ="btn btn-success" href="/add_article">Add Articles</a>
+</br>
+</br>
+ <h3>Welcome to Dashboard {{session.username.username}}</h3></br>
+<a class ="btn btn-success" href="/add_article">Add Articles</a></br></br>
 <hr>
 <table class="table table-striped">
 <tr>
@@ -23,9 +25,9 @@ console.log(se)
     <th>Title</th>
     <th>Author</th>
     <th>Date</th>
-    <th>   </th>
-    
-    <th>   </th>
+    <th><p>  </p></th>
+    <th><p>  </p></th>
+   
 
 </tr>
 {%for article in articles%}
