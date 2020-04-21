@@ -289,16 +289,20 @@ def update_article(id):
                 req = request.form
                 print("update values")
                 print(req)
+               # req.to_dict(flat=False)
                 title=req["title"]
+                print(title)
                 author=req["author"]
                 body=req["body"]
                 cur = mysql.connection.cursor()
                 result = cur.execute('UPDATE articles SET title=%s,author=%s,body=%s WHERE id=%s',(title,author,body,id))   
                 if result > 0:
                        print(str(result))
+                       mysql.connection.commit()
+                       cur.close()
                        return "sucess !!"
        
-       
+
        return "hii"
           
         
